@@ -15,6 +15,8 @@
         components: {
 			Tabbar,
             Navbar
+        },
+        mounted() {
         }
 	}
 </script>
