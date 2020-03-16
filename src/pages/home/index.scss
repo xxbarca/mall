@@ -1,0 +1,15 @@
+#home {
+    .container {
+        position: absolute;
+        overflow: auto;
+        top: 40px;
+        bottom: 50px;
+        .top-theme {
+            width: 100%;
+        }
+
+        .activity {
+            width: 100%;
+        }
+    }
+}

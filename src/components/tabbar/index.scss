@@ -5,9 +5,11 @@
     height: 60px;
     border-top: 1px solid #E3E3E3;
     box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 100;
+    background: white;
     .tab_item {
         display: flex;
         flex-direction: column;

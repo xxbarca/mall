@@ -5,5 +5,6 @@ module.exports = {
 				target: "https://api.sleeve.7yue.pro"
 			}
 		}
-	}
+	},
+	lintOnSave: false
 }
