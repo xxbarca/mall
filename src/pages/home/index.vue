@@ -13,6 +13,7 @@
                 <img class="activity" :src="activityD.entrance_img">
                 <img :src="themeF.entrance_img" class="quality"></img>
                 <HotList :banner="bannerG"/>
+                <img :src="themeH.entrance_img" class="fashion"></img>
             </div>
         <Tabbar />
     </div>
@@ -47,6 +48,7 @@
 		        themeE: [],
 		        themeESpu: [],
 		        themeF: {},
+		        themeH: {},
                 grid: []
             }
         },
@@ -64,6 +66,8 @@
                 const grid = await Category.getHomeLocationC()
 				const themeE = theme.getHomeLocationE()
 				const themeF = theme.getHomeLocationF()
+				const themeH = theme.getHomeLocationH()
+
 
 
 				let themeESpu = []
@@ -83,6 +87,7 @@
                 this.themeE = themeE
                 this.themeESpu = themeESpu
                 this.themeF = themeF
+                this.themeH = themeH
             }
         }
 	}
