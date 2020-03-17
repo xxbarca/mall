@@ -59,35 +59,22 @@
 			async initAllData() {
 				const theme = new Theme()
 				await theme.getThemes()
-                const themeA = theme.getHomeLocationA()
-                const bannerB = await Banner.getHomeLocationB()
+				this.themeA = theme.getHomeLocationA()
+				this.bannerB = await Banner.getHomeLocationB()
                 const activityD = await Activity.getHomeLocationD()
-                const bannerG = await Banner.getHomeLocationG()
-                const grid = await Category.getHomeLocationC()
-				const themeE = theme.getHomeLocationE()
-				const themeF = theme.getHomeLocationF()
-				const themeH = theme.getHomeLocationH()
+				this.bannerG = await Banner.getHomeLocationG()
+				this.grid = await Category.getHomeLocationC()
+				this.themeE = theme.getHomeLocationE()
+				this.themeF = theme.getHomeLocationF()
+				this.themeH = theme.getHomeLocationH()
 
-
-
-				let themeESpu = []
-
-				if (themeE.online) {
+				if (this.themeE.online) {
 					const data = await Theme.getHomeLocationESpu()
 					if (data) {
-						themeESpu = data.spu_list.slice(0, 8)
+						this.themeESpu = data.spu_list.slice(0, 8)
 					}
 				}
-
-				this.themeA = themeA
-                this.bannerB = bannerB
                 this.activityD = activityD
-                this.bannerG = bannerG
-                this.grid = grid
-                this.themeE = themeE
-                this.themeESpu = themeESpu
-                this.themeF = themeF
-                this.themeH = themeH
             }
         }
 	}
