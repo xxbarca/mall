@@ -4,13 +4,15 @@
         <div class="holderTop"></div>
             <div class="container">
                 <img class="top-theme" :src="themeA.entrance_img">
-                <img class="activity" :src="activityD.entrance_img">
-                <CategoryGrid :grid="grid" />
                 <van-swipe :autoplay="3000" indicator-color="#157658">
                     <van-swipe-item v-for="(item, index) in bannerB.items" :key="index">
                         <img class="swiper" v-lazy="item.img" />
                     </van-swipe-item>
                 </van-swipe>
+                <CategoryGrid :grid="grid" />
+                <img class="activity" :src="activityD.entrance_img">
+                <img :src="themeF.entrance_img" class="quality"></img>
+                <HotList :banner="bannerG"/>
             </div>
         <Tabbar />
     </div>
@@ -19,11 +21,12 @@
 <script>
 	import Tabbar from '../../components/tabbar'
 	import Navbar from '../../components/navbar'
-	import {Theme} from "@/models/theme"
-	import {Activity} from "@/models/activity"
-	import {Banner} from "@/models/banner"
+	import {Theme} from "../../models/theme"
+	import {Activity} from "../../models/activity"
+	import {Banner} from "../../models/banner"
     import CategoryGrid from '../../components/category-grid'
-	import {Category} from "@/models/category"
+	import {Category} from "../../models/category"
+    import HotList from "../../components/hot-list"
 
 
 	export default {
@@ -31,18 +34,19 @@
         components: {
 			Tabbar,
             Navbar,
-            CategoryGrid
+            CategoryGrid,
+	        HotList
         },
 
         data() {
-            // eslint-disable-next-line no-mixed-spaces-and-tabs
 	        return {
-                // eslint-disable-next-line no-mixed-spaces-and-tabs
 		        themeA: null,
-                // eslint-disable-next-line no-mixed-spaces-and-tabs
 		        activityD: null,
                 bannerB: [],
                 bannerG: [],
+		        themeE: [],
+		        themeESpu: [],
+		        themeF: {},
                 grid: []
             }
         },
@@ -58,13 +62,27 @@
                 const activityD = await Activity.getHomeLocationD()
                 const bannerG = await Banner.getHomeLocationG()
                 const grid = await Category.getHomeLocationC()
+				const themeE = theme.getHomeLocationE()
+				const themeF = theme.getHomeLocationF()
+
+
+				let themeESpu = []
+
+				if (themeE.online) {
+					const data = await Theme.getHomeLocationESpu()
+					if (data) {
+						themeESpu = data.spu_list.slice(0, 8)
+					}
+				}
 
 				this.themeA = themeA
                 this.bannerB = bannerB
                 this.activityD = activityD
                 this.bannerG = bannerG
                 this.grid = grid
-                console.log(bannerB)
+                this.themeE = themeE
+                this.themeESpu = themeESpu
+                this.themeF = themeF
             }
         }
 	}

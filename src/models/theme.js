@@ -34,6 +34,17 @@ class Theme {
 		return this.themes.find(t => t.name === Theme.locationH)
 	}
 	
+	static getHomeLocationESpu() {
+		return Theme.getThemeSpuByName(Theme.locationE)
+	}
+	
+	
+	static getThemeSpuByName(name) {
+		return Http.request({
+			url: `/v1/theme/name/${name}/with_spu`
+		})
+	}
+	
 }
 
 export {

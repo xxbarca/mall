@@ -1,0 +1,38 @@
+#hot-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    .title {
+        width: 345px;
+        height: 45px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        .left {
+            display: flex;
+            width: 100%;
+            height: 330px;
+        }
+
+        .right-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .right-size {
+                width: 200px;
+                height: 165px;
+                display: flex;
+            }
+        }
+    }
+
+}

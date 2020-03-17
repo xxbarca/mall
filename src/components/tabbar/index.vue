@@ -36,9 +36,7 @@
             }
         },
         methods: {
-            // eslint-disable-next-line no-mixed-spaces-and-tabs
 	        switchToTab(path) {
-				console.log(path)
                 this.$router.replace(path)
             }
         }
