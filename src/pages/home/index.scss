@@ -1,14 +1,21 @@
 #home {
     .container {
         position: absolute;
-        overflow: auto;
         top: 40px;
         bottom: 50px;
+        overflow-x: hidden;
+        width: 100%;
+
         .top-theme {
             width: 100%;
         }
 
         .activity {
+            width: 100%;
+        }
+
+        .swiper {
+            height: 180px;
             width: 100%;
         }
     }

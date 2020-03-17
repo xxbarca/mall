@@ -6,6 +6,11 @@
                 <img class="top-theme" :src="themeA.entrance_img">
                 <img class="activity" :src="activityD.entrance_img">
                 <CategoryGrid :grid="grid" />
+                <van-swipe :autoplay="3000" indicator-color="#157658">
+                    <van-swipe-item v-for="(item, index) in bannerB.items" :key="index">
+                        <img class="swiper" v-lazy="item.img" />
+                    </van-swipe-item>
+                </van-swipe>
             </div>
         <Tabbar />
     </div>
@@ -30,8 +35,11 @@
         },
 
         data() {
+            // eslint-disable-next-line no-mixed-spaces-and-tabs
 	        return {
+                // eslint-disable-next-line no-mixed-spaces-and-tabs
 		        themeA: null,
+                // eslint-disable-next-line no-mixed-spaces-and-tabs
 		        activityD: null,
                 bannerB: [],
                 bannerG: [],
@@ -56,6 +64,7 @@
                 this.activityD = activityD
                 this.bannerG = bannerG
                 this.grid = grid
+                console.log(bannerB)
             }
         }
 	}
@@ -64,4 +73,11 @@
 <style lang="scss" scoped>
 
     @import "./index";
+    .my-swipe .van-swipe-item {
+        color: #fff;
+        font-size: 20px;
+        line-height: 150px;
+        text-align: center;
+        background-color: #39a9ed;
+    }
 </style>

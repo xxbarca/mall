@@ -12,12 +12,10 @@
 </template>
 
 <script>
-	import { Grid, GridItem } from 'vant';
 	export default {
 		name: "CategoryGrid",
         components: {
-			GridItem,
-            Grid
+
         },
 		props: {
 			grid: {
@@ -26,7 +24,6 @@
 			}
 		},
         mounted() {
-			console.log(this.grid)
         }
 	}
 </script>
