@@ -4,6 +4,7 @@ import Home from '../pages/home'
 import Category from '../pages/category'
 import My from '../pages/my'
 import Cart from '../pages/cart'
+import Detail from '../pages/detail'
 
 Vue.use(Router)
 
@@ -24,5 +25,9 @@ export default new Router({
 		path: '/cart',
 		name: 'Cart',
 		component: Cart
+	}, {
+		path: '/detail/:id',
+		name: 'Detail',
+		component: Detail
 	}]
 })

@@ -14,6 +14,10 @@
                 <img :src="themeF.entrance_img" class="quality"></img>
                 <HotList :banner="bannerG"/>
                 <img :src="themeH.entrance_img" class="fashion"></img>
+				<div class="spu-bottom">
+					<img class="title-spu-bottom" src="../../imgs/home/title@interest.png">
+
+				</div>
             </div>
         <Tabbar />
     </div>
@@ -28,7 +32,7 @@
     import CategoryGrid from '../../components/category-grid'
 	import {Category} from "../../models/category"
     import HotList from "../../components/hot-list"
-
+	import {SpuPaging} from "../../models/SpuPaging"
 
 	export default {
 		name: "index",
@@ -49,13 +53,19 @@
 		        themeESpu: [],
 		        themeF: {},
 		        themeH: {},
-                grid: []
+                grid: [],
+                flowItems: []
             }
         },
 		mounted() {
             this.initAllData()
+            this.initBottomSpuList()
         },
         methods: {
+	        async initBottomSpuList() {
+                const data = await SpuPaging.getLatestPaging()
+                this.flowItems = data.items
+	        },
 			async initAllData() {
 				const theme = new Theme()
 				await theme.getThemes()
