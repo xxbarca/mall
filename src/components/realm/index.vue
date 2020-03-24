@@ -1,10 +1,12 @@
 <template>
-	<div>
-		<div class="container">
-			<div class="inner-container">
-				<Fence v-for="(item, index) in fences" :key="index" :fence="item" :x="index" />
-			</div>
+	<div id="realm">
+		<div>
+			<img src="">
 		</div>
+		<div class="inner-container">
+			<Fence v-for="(item, index) in fences" :key="index" :fence="item" :x="index" />
+		</div>
+		<div class="counter-container"></div>
 	</div>
 </template>
 
@@ -30,6 +32,7 @@
 			processHasSpec(spu) {
 				const fencesGroup = new FenceGroup(spu)
 				fencesGroup.initFences()
+				console.log(fencesGroup)
 				//
 				this.judger = new Judger(fencesGroup)
 
@@ -64,4 +67,5 @@
 </script>
 
 <style scoped>
+	@import "./index.scss";
 </style>

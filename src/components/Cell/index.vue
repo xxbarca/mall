@@ -1,5 +1,5 @@
 <template>
-	<div  class="container">
+	<div id="cell">
 		<div class="inner-container">
 			<label>{{cell.title}}</label>
 		</div>

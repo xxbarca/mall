@@ -1,9 +1,15 @@
-.inner-container {
-    height: 30px;
-    padding-left: 7px;
-    padding-right: 7px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: #ffffff;
+#cell {
+
+    border: 1px solid #333333;
+
+
+    .inner-container {
+        height: 30px;
+        padding-left: 7px;
+        padding-right: 7px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #ffffff;
+    }
 }

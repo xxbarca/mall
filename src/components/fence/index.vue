@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div id="fence">
 		<div class="title">{{fence.title}}</div>
 		<div class="row-container">
 			<Cell v-for="(item, index) in fence.cells"
