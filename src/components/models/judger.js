@@ -1,4 +1,6 @@
 import {SkuCode} from "./skuCode"
+import {Cell} from "./cell"
+import {CellStatus} from "../../utils/enum"
 
 class Judger {
 	
@@ -12,16 +14,27 @@ class Judger {
 	}
 	
 	/**
-	 * 潜在路径
+	 * 获取潜在路径
 	 * */
 	_initPathDict() {
 		// code: 2$1-45#3-9#4-14
 		this.fenceGroup.spu.sku_list.forEach(s => {
 			const skuCode = new SkuCode(s.code)
-			// console.log(skuCode.totalSegments)
 			this.pathDict = this.pathDict.concat(skuCode.totalSegments)
 		})
-		console.log(this.pathDict)
+	}
+	
+	judge(data) {
+		this._changeCellStatus(data)
+	}
+	
+	_changeCellStatus(data) {
+		const { cell, x, y } = data
+		if (cell.status === CellStatus.WAITING) {
+			this.fenceGroup.fences[x].cells[y].status = CellStatus.SELECTED
+		} else if (cell.status === CellStatus.SELECTED) {
+			this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+		}
 	}
 }
 

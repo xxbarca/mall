@@ -8,13 +8,17 @@
 
 <script>
 	import {CellStatus} from "../../utils/enum"
-
+	import EventBus from '../../utils/eventBus'
 	export default {
 		name: "index",
 		props: ['x', 'y', 'cell'],
 		methods: {
 			onTap: function () {
-
+				EventBus.$emit('celltap', {
+					cell: this.cell,
+					x: this.x,
+					y: this.y
+				})
 			},
 			statusStyle: function (status) {
 				if (status === CellStatus.FORBIDDEN) {

@@ -12,7 +12,6 @@
 </template>
 
 <script>
-	import Detail from "../../pages/detail/index"
 	import Cell from  '../Cell'
 	export default {
 		name: "index",
@@ -20,8 +19,6 @@
 			Cell
 		},
 		props: ["fence", "x"],
-		mounted() {
-		}
 	}
 </script>
 

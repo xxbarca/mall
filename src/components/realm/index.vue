@@ -15,6 +15,7 @@
 	import {FenceGroup} from '../models/fenceGroup'
 	import {Judger} from "../models/judger"
 	import Fence from  '../fence'
+	import EventBus from '../../utils/eventBus'
 
 	export default {
 		name: "index",
@@ -31,6 +32,16 @@
 		methods: {
 			bindFenceGroupData(fencesGroup) {
 				this.fences = fencesGroup.fences
+			},
+			initEventBus() {
+				/**
+				 *
+				 * 点击cell, 切换状态, 并重新绑定数据
+				 * */
+				EventBus.$on('celltap', (data) => {
+					this.judger.judge(data)
+					this.bindFenceGroupData(this.judger.fenceGroup)
+				});
 			}
 		},
 
@@ -42,11 +53,14 @@
 				const fencesGroup = new FenceGroup(spu)
 				fencesGroup.initFences()
 
-				const judger = new Judger(fencesGroup)
+				this.judger = new Judger(fencesGroup)
 
 				this.bindFenceGroupData(fencesGroup)
 
 			}
+		},
+		mounted() {
+			this.initEventBus()
 		}
 	}
 </script>
