@@ -1,15 +1,34 @@
 #cell {
-
+    height: 30px;
     border: 1px solid #333333;
-
-
+    padding: 1px;
+    box-sizing: border-box;
     .inner-container {
-        height: 30px;
+        height: 100%;
         padding-left: 7px;
         padding-right: 7px;
         display: flex;
         flex-direction: row;
         align-items: center;
         background-color: #ffffff;
+        font-size: 12px;
+    }
+
+    &.forbidden {
+        border: 1px dashed #bbbbbb;
+        color: #bbbbbb;
+    }
+
+    &.s-outer {
+        border: 1px solid #157658;
+        color: #ffffff;
+    }
+
+    .s-inner {
+        background-color: #157658;
+    }
+
+    .selected {
+
     }
 }
