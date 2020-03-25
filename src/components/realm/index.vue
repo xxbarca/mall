@@ -29,22 +29,6 @@
 			}
 		},
 		methods: {
-			processHasSpec(spu) {
-				const fencesGroup = new FenceGroup(spu)
-				fencesGroup.initFences()
-				console.log(fencesGroup)
-				//
-				this.judger = new Judger(fencesGroup)
-
-				//
-				const defaultSku = fencesGroup.getDefaultSku()
-
-
-				//
-				this.bindFenceGroupData(fencesGroup)
-
-			},
-
 			bindFenceGroupData(fencesGroup) {
 				this.fences = fencesGroup.fences
 			}
@@ -55,12 +39,13 @@
 				if (!spu) {
 					return
 				}
-				if (Spu.isNoSpec(spu)) {
+				const fencesGroup = new FenceGroup(spu)
+				fencesGroup.initFences()
 
-				} else {
-					// 处理有规格情况
-					this.processHasSpec(spu)
-				}
+				const judger = new Judger(fencesGroup)
+
+				this.bindFenceGroupData(fencesGroup)
+
 			}
 		}
 	}

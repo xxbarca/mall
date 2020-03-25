@@ -9,7 +9,6 @@ class Judger {
 	constructor(fenceGroup) {
 		this.fenceGroup = fenceGroup
 		this._initPathDict()
-		this._initSkuPending()
 	}
 	
 	/**
@@ -19,13 +18,10 @@ class Judger {
 		// code: 2$1-45#3-9#4-14
 		this.fenceGroup.spu.sku_list.forEach(s => {
 			const skuCode = new SkuCode(s.code)
-			this.pathDict.concat(skuCode.totalSegments)
+			// console.log(skuCode.totalSegments)
+			this.pathDict = this.pathDict.concat(skuCode.totalSegments)
 		})
-	}
-	
-	// TODO _initSkuPending
-	_initSkuPending() {
-	
+		console.log(this.pathDict)
 	}
 }
 
