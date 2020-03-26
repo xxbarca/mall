@@ -1,8 +1,23 @@
 <template>
 	<div id="realm">
-		<div>
-			<img src="">
+		<div class="sku-preview">
+			<img class="sku-img" src="">
+			<div class="sku-description">
+				<span class="title">测试sku</span>
+				<div>
+					<div class="price-row">
+						<span>777</span>
+						<span>999</span>
+					</div>
+					<div class="sku-pending">
+						<span>请选择:</span>
+					</div>
+				</div>
+			</div>
 		</div>
+
+		<div class="hr"></div>
+
 		<div class="inner-container">
 			<Fence v-for="(item, index) in fences" :key="index" :fence="item" :x="index" />
 		</div>
@@ -11,7 +26,6 @@
 </template>
 
 <script>
-	import {Spu} from "../../models/spu"
 	import {FenceGroup} from '../models/fenceGroup'
 	import {Judger} from "../models/judger"
 	import Fence from  '../fence'
@@ -65,6 +79,6 @@
 	}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 	@import "./index.scss";
 </style>

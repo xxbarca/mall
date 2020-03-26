@@ -36,18 +36,8 @@ class Judger {
 	
 	judge(data) {
 		this._changeCurrentCellStatus(data)
-		this.fenceGroup.eachCell((cell, x, y) => {
-			const path  = this._findPotentialPath(cell, x, y)
-			if (!path) {
-				return
-			}
-			const isIn = this._isInDict(path)
-			if (isIn) {
-				this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
-			} else {
-				this.fenceGroup.fences[x].cells[y].status = CellStatus.FORBIDDEN
-			}
-		})
+		this._changeOtherCellStatus()
+		
 	}
 	/**
 	 * 判断路径是否在潜在路径里面
@@ -61,8 +51,19 @@ class Judger {
 	 * @param: x - 行号
 	 * @param: y - 列号
 	 * */
-	_changeOtherCellStatus(cell, x, y) {
-	
+	_changeOtherCellStatus() {
+		this.fenceGroup.eachCell((cell, x, y) => {
+			const path  = this._findPotentialPath(cell, x, y)
+			if (!path) {
+				return
+			}
+			const isIn = this._isInDict(path)
+			if (isIn) {
+				this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+			} else {
+				this.fenceGroup.fences[x].cells[y].status = CellStatus.FORBIDDEN
+			}
+		})
 	}
 	
 	/**
