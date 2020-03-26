@@ -25,9 +25,6 @@ class FenceGroup {
 		AT.forEach(r => {
 			const fence = new Fence(r)
 			fence.init()
-			
-			// TODO 设置可视规格
-			
 			fences.push(fence)
 		})
 		this.fences = fences
@@ -42,12 +39,13 @@ class FenceGroup {
 		return new Matrix(m)
 	}
 	
-	getDefaultSku() {
-		const defaultSkuId = this.spu.default_sku_id
-		if (!defaultSkuId) {
-			return
+	eachCell(cb) {
+		for (let i = 0; i < this.fences.length; i++) {
+			for (let j = 0; j < this.fences[i].cells.length; j++) {
+				const cell = this.fences[i].cells[j]
+				cb(cell, i, j)
+			}
 		}
-		return this.skuList.find(s => s.id === defaultSkuId)
 	}
 }
 
