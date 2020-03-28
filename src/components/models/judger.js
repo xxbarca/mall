@@ -12,8 +12,8 @@ class Judger {
 	
 	constructor(fenceGroup) {
 		this.fenceGroup = fenceGroup
-		this._initSkuPending()
 		this._initPathDict()
+		this._initSkuPending()
 	}
 	
 	/**
@@ -21,8 +21,30 @@ class Judger {
 	 * */
 	_initSkuPending() {
 		this.skuPending = new SkuPending()
+		this._getDefaultSku()
 	}
 	
+	/**
+	 * 获取并设置默认sku
+	 * */
+	_getDefaultSku() {
+		const defaultSku = this.fenceGroup.getDefaultSku()
+		if (!defaultSku) {
+			return
+		}
+		this.skuPending.init(defaultSku)
+		this._setDefaultSelected()
+		this.judge({}, true)
+	}
+	
+	/**
+	 * 设置默认sku的选中状态
+	 * */
+	_setDefaultSelected() {
+		this.skuPending.pending.forEach(c => {
+			this.fenceGroup.setCellStatusBuyId(c.id, CellStatus.SELECTED)
+		})
+	}
 	/**
 	 * 获取潜在路径
 	 * */
@@ -34,10 +56,16 @@ class Judger {
 		})
 	}
 	
-	judge(data) {
-		this._changeCurrentCellStatus(data)
+	
+	/**
+	 * isInit = true: 是初始化的时候调用, 此时是设置默认sku
+	 * isInit = false: 是手动点击cell的时候调用
+	 * */
+	judge(data, isInit = false) {
+		if (!isInit) {
+			this._changeCurrentCellStatus(data)
+		}
 		this._changeOtherCellStatus()
-		
 	}
 	/**
 	 * 判断路径是否在潜在路径里面
@@ -59,9 +87,11 @@ class Judger {
 			}
 			const isIn = this._isInDict(path)
 			if (isIn) {
-				this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+				// this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+				this.fenceGroup.setCellStatusByXY(x, y, CellStatus.WAITING)
 			} else {
-				this.fenceGroup.fences[x].cells[y].status = CellStatus.FORBIDDEN
+				// this.fenceGroup.fences[x].cells[y].status = CellStatus.FORBIDDEN
+				this.fenceGroup.setCellStatusByXY(x, y, CellStatus.FORBIDDEN)
 			}
 		})
 	}
@@ -113,11 +143,13 @@ class Judger {
 	_changeCurrentCellStatus(data) {
 		const { cell, x, y } = data
 		if (cell.status === CellStatus.WAITING) {
-			this.fenceGroup.fences[x].cells[y].status = CellStatus.SELECTED
+			// this.fenceGroup.fences[x].cells[y].status = CellStatus.SELECTED
+			this.fenceGroup.setCellStatusByXY(x, y, CellStatus.SELECTED)
 			// 进入skupending
 			this.skuPending.insertCell(cell, x)
 		} else if (cell.status === CellStatus.SELECTED) {
-			this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+			// this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+			this.fenceGroup.setCellStatusByXY(x, y, CellStatus.WAITING)
 			// 退出skupending
 			this.skuPending.removeCell(x)
 		}
