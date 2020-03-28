@@ -33,14 +33,14 @@ class Judger {
 			return
 		}
 		this.skuPending.init(defaultSku)
-		this._setDefaultSelected()
+		this._setSelectedCell()
 		this.judge({}, true)
 	}
 	
 	/**
 	 * 设置默认sku的选中状态
 	 * */
-	_setDefaultSelected() {
+	_setSelectedCell() {
 		this.skuPending.pending.forEach(c => {
 			this.fenceGroup.setCellStatusBuyId(c.id, CellStatus.SELECTED)
 		})
