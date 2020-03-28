@@ -20,8 +20,16 @@ class Judger {
 	 *
 	 * */
 	_initSkuPending() {
-		this.skuPending = new SkuPending()
+		const specsLength = this.fenceGroup.fences.length
+		this.skuPending = new SkuPending(specsLength)
 		this._getDefaultSku()
+	}
+	
+	/**
+	 * 是否选择了完整路径
+	 * */
+	isSkuIntact() {
+		return this.skuPending.isIntact()
 	}
 	
 	/**

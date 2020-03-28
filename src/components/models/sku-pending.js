@@ -8,8 +8,10 @@ import {CellStatus} from "../../utils/enum"
 class SkuPending {
 	
 	pending = []
+	size
 	
-	constructor() {
+	constructor(size) {
+		this.size = size
 	}
 	
 	init(sku) {
@@ -17,6 +19,31 @@ class SkuPending {
 			const cell = new Cell(sku.specs[i])
 			this.insertCell(cell, i)
 		}
+	}
+	
+	/**
+	 * 是否确认了完整的sku
+	 *      1. true: 用户已经确认了完整的sku
+	 *      2. false: 用户没有确认完整的sku
+	 * */
+	isIntact() {
+		if (this.size !== this.pending.length) {
+			return false
+		}
+		
+		for (let i = 0; i < this.size; i++) {
+			if (this._isEmptyPart(i)) {
+				return  false
+			}
+		}
+		return true
+	}
+	
+	/**
+	 * 如果存在值不为 undefined
+	 * */
+	_isEmptyPart(index) {
+		return this.pending[index] ? false : true
 	}
 	
 	insertCell(cell, x) {
