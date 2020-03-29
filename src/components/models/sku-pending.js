@@ -1,5 +1,6 @@
 import {Cell} from "./cell"
 import {CellStatus} from "../../utils/enum"
+import {Joiner} from "../../utils/joiner"
 
 /**
  * 选择完整的路径可以确定一个sku
@@ -19,6 +20,40 @@ class SkuPending {
 			const cell = new Cell(sku.specs[i])
 			this.insertCell(cell, i)
 		}
+	}
+	
+	/**
+	 * 获取当前已选的规格值
+	 * */
+	getCurrentSpecValues() {
+		return this.pending.map(cell => {
+			return cell ? cell.spec.value : null
+		})
+	}
+	
+	/**
+	 * 获取未选的规格名
+	 * */
+	getMissingSpecKeysIndex() {
+		const keysIndex = []
+		for (let i = 0; i < this.size; i++) {
+			if (!this.pending[i]) {
+				keysIndex.push(i)
+			}
+		}
+		return keysIndex
+	}
+	
+	/**
+	 * 获取skuCode码
+	 * */
+	getSkuCode() {
+		const joiner = new Joiner("#")
+		this.pending.forEach(cell => {
+			const cellCode = cell.getCellCode()
+			joiner.join(cellCode)
+		})
+		return joiner.getStr()
 	}
 	
 	/**

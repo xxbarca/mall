@@ -26,12 +26,36 @@ class Judger {
 	}
 	
 	/**
+	 * 获取确定的sku
+	 * */
+	getDeterminateSku() {
+		const code = this.skuPending.getSkuCode()
+		const sku = this.fenceGroup.getSku(code)
+		return sku
+	}
+	/**
 	 * 是否选择了完整路径
 	 * */
 	isSkuIntact() {
 		return this.skuPending.isIntact()
 	}
 	
+	/**
+	 * 获取未选择的规格值
+	 * */
+	getCurrentValues() {
+		return this.skuPending.getCurrentSpecValues()
+	}
+	
+	/**
+	 * 获取未选择的规格名
+	 * */
+	getMissingKeys() {
+		const missingKeysIndex = this.skuPending.getMissingSpecKeysIndex()
+		return missingKeysIndex.map(i => {
+			return this.fenceGroup.fences[i].title
+		})
+	}
 	/**
 	 * 获取并设置默认sku
 	 * */

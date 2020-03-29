@@ -24,6 +24,14 @@ class FenceGroup {
 	}
 	
 	/**
+	 *
+	 * */
+	getSku(skuCode) {
+		const fullSkuCode = `${this.spu.id}$${skuCode}`
+		const sku = this.spu.sku_list.find(s => s.code === fullSkuCode)
+		return sku ? sku : null
+	}
+	/**
 	 * 通过 id 改变cell的状态
 	 * */
 	setCellStatusBuyId(cellId, status) {
