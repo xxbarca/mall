@@ -26,7 +26,10 @@
 		<div class="inner-container">
 			<Fence v-for="(item, index) in fences" :key="index" :fence="item" :x="index" />
 		</div>
-		<div class="counter-container"></div>
+		<div class="counter-container">
+			<span>购买数量</span>
+			<Counter :count=5 :min=6 :max=10 />
+		</div>
 	</div>
 </template>
 
@@ -36,15 +39,18 @@
 	import Fence from  '../fence'
 	import EventBus from '../../utils/eventBus'
 	import {Spu} from "../../models/spu"
+	import Counter from '../counter/index'
 
 	export default {
 		name: "index",
 		props: ['spu'],
 		components: {
-			Fence
+			Fence,
+			Counter
 		},
 		data() {
 			return {
+				count: 5,
 				judger: {},
 				fences: [],
 				previewImg: '',

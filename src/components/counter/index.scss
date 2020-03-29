@@ -1,0 +1,48 @@
+#counter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    border: 1px solid #157658;
+    box-sizing: border-box;
+    font-size: 20px;
+
+    .min {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        color: #157658;
+    }
+
+    .number {
+        border: none;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        margin-left: 5px;
+        font-size: 15px;
+    }
+
+    .add {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        margin-left: 5px;
+        color: #157658;
+    }
+
+    .disable {
+        color: #DDDDDD;
+    }
+}
