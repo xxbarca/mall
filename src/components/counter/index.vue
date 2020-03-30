@@ -46,6 +46,9 @@
 		},
 		watch: {
 			count_: function (newCount, oldCount) {
+				if (newCount === oldCount) {
+					return
+				}
 				if (newCount > this.max) {
 					Toast(`限购${this.max}件`);
 					this.count_ = oldCount
@@ -56,6 +59,8 @@
 					Toast(`${this.min}件起首`);
 					return
 				}
+				this.$emit('onSelectCount', newCount)
+
 			}
 		},
 		methods: {

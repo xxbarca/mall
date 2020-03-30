@@ -8,7 +8,13 @@
 
 <script>
 	export default {
-		name: "Navbar"
+		name: "Navbar",
+		props: {
+			title: {
+				type: String,
+				default: "商城"
+			}
+		}
 	}
 </script>
 

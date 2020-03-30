@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="detail">
 		<Realm v-bind:spu="spu" />
 	</div>
 </template>
@@ -7,6 +7,7 @@
 <script>
 	import {Spu} from "../../models/spu"
 	import Realm from  '../../components/realm'
+	import Navbar from '../../components/navbar'
 
 	export default {
 		name: "Detail",
@@ -17,7 +18,8 @@
 			}
 		},
 		components: {
-			Realm
+			Realm,
+			Navbar
 		},
 		methods: {
 			async getData(id) {

@@ -1,36 +1,46 @@
 <template>
-	<div id="realm">
-		<div class="sku-preview">
-			<img class="sku-img" :src="previewImg">
-			<div class="sku-description">
-				<span class="title">{{title}}</span>
-				<div>
-					<div class="price-row">
-						<span>{{price}}</span>
-						<span v-show="discountPrice">{{discountPrice}}</span>
-						<span v-if="stock && stock >= 10" class="stock">库存: {{stock}} 件</span>
-						<span v-if="stock && stock < 10 && stock != 0" class="stock-pinch">仅剩 {{stock}} 件</span>
-					</div>
-					<div v-if="!noSpec" class="sku-pending">
-						<span v-if="!skuIntact">请选择:</span>
-						<span v-else>已选:</span>
-						<span v-if="!skuIntact">{{missingKeys}}</span>
-						<span v-else>{{currentValues}}</span>
+	<div>
+		<div id="realm">
+			<div class="sku-preview">
+				<img class="sku-img" :src="previewImg">
+				<div class="sku-description">
+					<span class="title">{{title}}</span>
+					<div>
+						<div class="price-row">
+							<span>{{price}}</span>
+							<span v-show="discountPrice">{{discountPrice}}</span>
+							<span v-if="stock && stock >= 10" class="stock">库存: {{stock}} 件</span>
+							<span v-if="stock && stock < 10 && stock != 0" class="stock-pinch">仅剩 {{stock}} 件</span>
+						</div>
+						<div v-if="!noSpec" class="sku-pending">
+							<span v-if="!skuIntact">请选择:</span>
+							<span v-else>已选:</span>
+							<span v-if="!skuIntact">{{missingKeys}}</span>
+							<span v-else>{{currentValues}}</span>
+						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="hr"></div>
+
+			<div class="inner-container">
+				<Fence v-for="(item, index) in fences" :key="index" :fence="item" :x="index" />
+			</div>
+			<div class="counter-container">
+				<span>购买数量</span>
+				<Counter @onSelectCount="onSelectCount" />
+			</div>
+		</div>
+		<div v-if="!outStock" class="bottom-btn">
+			<span>加入购物车</span>
+		</div>
+		<div v-else class="bottom-btn out-stock">
+			<span>暂时缺货</span>
 		</div>
 
-		<div class="hr"></div>
-
-		<div class="inner-container">
-			<Fence v-for="(item, index) in fences" :key="index" :fence="item" :x="index" />
-		</div>
-		<div class="counter-container">
-			<span>购买数量</span>
-			<Counter :count=5 :min=6 :max=10 />
-		</div>
 	</div>
+
 </template>
 
 <script>
@@ -40,6 +50,7 @@
 	import EventBus from '../../utils/eventBus'
 	import {Spu} from "../../models/spu"
 	import Counter from '../counter/index'
+	import {Cart} from "../../models/cart"
 
 	export default {
 		name: "index",
@@ -57,6 +68,8 @@
 				title: '',
 				price: '',
 				discountPrice: '',
+				// 是否缺货
+				outStock: false,
 				// spu情况下不显示, sku情况下显示
 				stock: '',
 				// 是否无规格
@@ -66,10 +79,22 @@
 				// 已选择的规格值
 				currentValues: '',
 				// 未选择的规格名
-				missingKeys: ''
+				missingKeys: '',
+				// 当前购买数量
+				currentSkuCount: Cart.SKU_MIN_COUNT
 			}
 		},
 		methods: {
+			/**
+			 * 获取当前的购买数量
+			 * */
+			onSelectCount(count) {
+				this.currentSkuCount = count
+				if (this.judger.isSkuIntact()) {
+					const sku = this.judger.getDeterminateSku()
+					this.setStockStatus(sku.stock, count)
+				}
+			},
 			/**
 			 * 绑定cell表格数据
 			 * */
@@ -111,6 +136,7 @@
 			processNoSpec(spu) {
 				this.noSpec = true
 				this.bindSkuData(spu.sku_list[0])
+				this.setStockStatus(spu.stock, this.currentSkuCount)
 			},
 
 			/**
@@ -120,16 +146,28 @@
 				const fencesGroup = new FenceGroup(spu)
 				fencesGroup.initFences()
 				this.judger = new Judger(fencesGroup)
-
 				//
 				const defaultSku = fencesGroup.getDefaultSku()
 				if (defaultSku) {
 					this.bindSkuData(defaultSku)
+					this.setStockStatus(defaultSku.stock, this.currentSkuCount)
 				} else {
 					this.bindSpuData()
 				}
 				this.bindTipData()
 				this.bindFenceGroupData(fencesGroup)
+			},
+
+			//
+			setStockStatus(stock, currentCount) {
+				this.outStock = this.isOutOfStock(stock, currentCount)
+			},
+
+			/**
+			 * 是否缺货
+			 * */
+			isOutOfStock(stock, currentCount) {
+				return stock < currentCount
 			},
 
 			initEventBus() {
@@ -143,6 +181,7 @@
 					if (skuIntact) {
 						const currentSku = this.judger.getDeterminateSku()
 						this.bindSkuData(currentSku)
+						this.setStockStatus(currentSku.stock, this.currentSkuCount)
 					}
 					//
 					this.bindTipData()
