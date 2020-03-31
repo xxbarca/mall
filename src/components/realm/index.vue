@@ -21,7 +21,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="hr"></div>
 
 			<div class="inner-container">

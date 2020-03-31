@@ -6,6 +6,7 @@ import Vant from 'vant'
 import { Lazyload } from 'vant';
 import 'vant/lib/index.css'
 
+
 Vue.use(Lazyload)
 Vue.use(Vant)
 Vue.config.productionTip = false
