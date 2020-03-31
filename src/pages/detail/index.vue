@@ -2,7 +2,7 @@
 	<div id="detail">
 
 		<van-popup :lazy-render='false' position="bottom" v-model="showRealm">
-			<Realm v-bind:spu="spu" />
+			<Realm :orderWay="orderWay" v-bind:spu="spu" />
 		</van-popup>
 
 		<div class="tabbar">
@@ -20,6 +20,7 @@
 	import {Spu} from "../../models/spu"
 	import Realm from  '../../components/realm'
 	import Navbar from '../../components/navbar'
+	import {ShoppingWay} from "../../utils/enum"
 
 	export default {
 		name: "Detail",
@@ -28,7 +29,13 @@
 				pid: '',
 				spu: {},
 				showRealm: false,
-				lazyRender: false
+				lazyRender: false,
+				/**
+				 * 方式
+				 * 	1. 加入购物车
+				 * 	2. 立即购买
+				 * */
+				orderWay: ''
 			}
 		},
 		components: {
@@ -41,18 +48,22 @@
 				this.spu = spu
 			},
 
-			onGoToHome() {},
+			onGoToHome() {
+				this.$router.push('/')
+			},
 
 			onGoToCart() {
-
+				this.$router.push('/cart')
 			},
 
 			onAddToCart() {
 				this.showRealm = true
+				this.orderWay = ShoppingWay.CART
 			},
 
 			onBuy() {
 				this.showRealm = true
+				this.orderWay = ShoppingWay.BUY
 			}
 		},
 		mounted() {

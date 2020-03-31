@@ -32,7 +32,9 @@
 			</div>
 		</div>
 		<div v-if="!outStock" class="bottom-btn">
-			<span>加入购物车</span>
+			<span v-if="orderWay === 'cart'">加入购物车</span>
+			<span v-else>立即购买</span>
+
 		</div>
 		<div v-else class="bottom-btn out-stock">
 			<span>暂时缺货</span>
@@ -53,7 +55,7 @@
 
 	export default {
 		name: "index",
-		props: ['spu'],
+		props: ['spu', 'orderWay'],
 		components: {
 			Fence,
 			Counter
