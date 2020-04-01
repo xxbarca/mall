@@ -1,6 +1,7 @@
 <template>
 	<div @click="onTap" id="cell" :class="[statusStyle(cell.status).outer]">
 		<div :class="['inner-container', statusStyle(cell.status).inner]">
+			<img :src="cell.skuImg" class="img" v-if="cell.skuImg">
 			<label>{{cell.title}}</label>
 		</div>
 	</div>

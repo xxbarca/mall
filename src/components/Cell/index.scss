@@ -14,6 +14,13 @@
         font-size: 12px;
     }
 
+    .img {
+        display: flex;
+        width: 22px;
+        height: 22px;
+        margin-right: 5px;
+    }
+
     &.forbidden {
         border: 1px dashed #bbbbbb;
         color: #bbbbbb;

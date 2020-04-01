@@ -62,11 +62,30 @@ class FenceGroup {
 		const AT = matrix.transpose()
 		AT.forEach(r => {
 			const fence = new Fence(r)
+			
 			fence.init()
+			// 设置可视规格
+			if (this._hasSketchFence() && this._isSketchFence(fence.id)) {
+				fence.setFenceSketch(this.skuList)
+			}
 			fences.push(fence)
 		})
 		this.fences = fences
-		
+	}
+	
+	/**
+	 * 是否有可视规格
+	 * sketch_spec_id
+	 * */
+	_hasSketchFence() {
+		return this.spu.sketch_spec_id ? true : false
+	}
+	
+	/**
+	 * 确定可视规格
+	 * */
+	_isSketchFence(fenceId) {
+		return this.spu.sketch_spec_id === fenceId
 	}
 	
 	_createMatrix(skuList) {

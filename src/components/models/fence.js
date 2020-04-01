@@ -40,6 +40,24 @@ class Fence {
 			this.cells.push(cell)
 		})
 	}
+	
+	/**
+	 * 设置cell的可视规格
+	 * */
+	setFenceSketch(skuList) {
+		this.cells.forEach(cell => {
+			this._setCellSkuImg(cell, skuList)
+		})
+	}
+	
+	_setCellSkuImg(cell, skuList) {
+		const specCode = cell.getCellCode()
+		const matchedSku = skuList.find(s => s.code.includes(specCode))
+		if (matchedSku) {
+			cell.skuImg = matchedSku.img
+		}
+		
+	}
 }
 
 export {
