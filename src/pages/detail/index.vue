@@ -24,6 +24,10 @@
 			<Sale_Explain :texts="saleExplain" />
 		</div>
 
+		<div class="detail-img-container">
+			<img class="detail-img" :src="item.img" v-for="(item, index) in spu.spu_img_list" :key="index">
+		</div>
+
 		<van-popup :lazy-render='false' position="bottom" v-model="showRealm">
 			<Realm @specChange="specChange" :orderWay="orderWay" v-bind:spu="spu" />
 		</van-popup>
