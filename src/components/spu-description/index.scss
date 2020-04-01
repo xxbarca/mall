@@ -1,0 +1,59 @@
+#spuDescription {
+    box-sizing: border-box;
+    background-color: #ffffff;
+    padding: 17px 15px 13px 15px;
+    .left {
+
+        .subtitle {
+            color: #999999;
+            font-size: 14px;
+            font-weight: 400;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .price-row {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            margin-top: 10px;
+            span:nth-child(1) {
+                color: #157658;
+                font-size: 14px;
+                &:before {
+                    content: "¥";
+                    font-size: 12px;
+                }
+            }
+            span:nth-child(2) {
+                margin-left: 10px;
+                color: #999999;
+                font-size: 13px;
+                text-decoration: line-through;
+                &:before {
+                    content: "¥";
+                    font-size: 11px;
+                }
+            }
+            .discountTag {
+                background-color: #c93756;
+                font-size: 11px;
+                color: white;
+                margin-left: 15px;
+                padding: 1px 2px;
+                border-radius: 3px;
+            }
+        }
+    }
+    .tags {
+        display: flex;
+        flex-direction: row;
+        margin: 10px 0;
+        .tag {
+            color: #157658;
+            background-color: #DCEBE6;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+    }
+}

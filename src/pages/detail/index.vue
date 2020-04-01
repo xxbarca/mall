@@ -1,8 +1,31 @@
 <template>
 	<div id="detail">
+		<div>
+			<van-swipe :autoplay="3000" indicator-color="#157658">
+				<van-swipe-item v-for="(item, index) in spu.spu_img_list" :key="index">
+					<img class="swiper" v-lazy="item.img" />
+				</van-swipe-item>
+			</van-swipe>
+		</div>
+
+		<SpuDescription :spu="spu" />
+
+		<div v-if="!specs.noSpec" class="sku-pending" @click="onAddToCart">
+			<div class="specs">
+				<span v-if="!specs.skuIntact">请选择:</span>
+				<span v-else>已选:</span>
+				<span v-if="!specs.skuIntact">{{specs.missingKeys}}</span>
+				<span v-else>{{specs.currentValues}}</span>
+			</div>
+			<van-icon name="arrow" color="#157658" />
+		</div>
+
+		<div class="explain">
+			<Sale_Explain :texts="saleExplain" />
+		</div>
 
 		<van-popup :lazy-render='false' position="bottom" v-model="showRealm">
-			<Realm :orderWay="orderWay" v-bind:spu="spu" />
+			<Realm @specChange="specChange" :orderWay="orderWay" v-bind:spu="spu" />
 		</van-popup>
 
 		<div class="tabbar">
@@ -13,6 +36,7 @@
 				<van-goods-action-button color="#333333" type="danger" text="立即购买" @click="onBuy" />
 			</van-goods-action>
 		</div>
+
 	</div>
 </template>
 
@@ -21,6 +45,9 @@
 	import Realm from  '../../components/realm'
 	import Navbar from '../../components/navbar'
 	import {ShoppingWay} from "../../utils/enum"
+	import SpuDescription from '../../components/spu-description'
+	import Sale_Explain from '../../components/sale-explain'
+	import {SaleExplain} from "../../models/saleExplain"
 
 	export default {
 		name: "Detail",
@@ -35,17 +62,30 @@
 				 * 	1. 加入购物车
 				 * 	2. 立即购买
 				 * */
-				orderWay: ''
+				orderWay: '',
+				//
+				specs: {},
+				//
+				saleExplain: []
 			}
 		},
 		components: {
 			Realm,
-			Navbar
+			Navbar,
+			SpuDescription,
+			Sale_Explain
 		},
 		methods: {
 			async getData(id) {
 				const spu = await Spu.getDetail(id)
+				const explain = await SaleExplain.getFixed()
 				this.spu = spu
+				this.saleExplain = explain
+			},
+
+			specChange(detail) {
+				console.log(detail)
+				this.specs = detail
 			},
 
 			onGoToHome() {

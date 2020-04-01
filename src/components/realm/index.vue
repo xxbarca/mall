@@ -159,7 +159,30 @@
 				this.bindFenceGroupData(fencesGroup)
 			},
 
-			//
+			/**
+			 * 将已选信息传递给父组件
+			 * */
+			triggerSpecEvent() {
+				const noSpec = Spu.isNoSpec(this.spu)
+				if (noSpec) {
+					const detail = {
+						noSpec
+					}
+					this.$emit('specChange', detail)
+				} else {
+					const detail = {
+						noSpec: Spu.isNoSpec(this.spu),
+						skuIntact: this.judger.isSkuIntact(),
+						currentValues: this.judger.getCurrentValues().join(" "),
+						missingKeys: this.judger.getMissingKeys().join(' ')
+					}
+					this.$emit('specChange', detail)
+				}
+
+			},
+			/**
+			 * 设置状态
+			 * */
 			setStockStatus(stock, currentCount) {
 				this.outStock = this.isOutOfStock(stock, currentCount)
 			},
@@ -188,6 +211,8 @@
 					this.bindTipData()
 					//
 					this.bindFenceGroupData(this.judger.fenceGroup)
+					//
+					this.triggerSpecEvent()
 				});
 			}
 		},
@@ -203,6 +228,7 @@
 				} else {
 					this.processHasSpec(spu)
 				}
+				this.triggerSpecEvent()
 			}
 		},
 		mounted() {
