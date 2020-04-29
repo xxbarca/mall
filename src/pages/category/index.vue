@@ -1,7 +1,34 @@
 <template>
     <div id="category">
         <Navbar />
-        category
+		<div class="container">
+			<div class="search-container">
+				<van-search
+						@click="onGoToSearch"
+						disabled
+						placeholder="请输入搜索关键词"
+				/>
+			</div>
+			<div class="main">
+				<van-sidebar class="scroll" v-model="activeKey">
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称" />
+					<van-sidebar-item title="标签名称1" />
+				</van-sidebar>
+				<div class="right">
+					33
+				</div>
+			</div>
+		</div>
         <Tabbar />
     </div>
 </template>
@@ -9,13 +36,34 @@
 <script>
 	import Tabbar from '../../components/tabbar'
 	import Navbar from '../../components/navbar'
+	import {Categories} from "../../models/categories"
 
 	export default {
 		name: "index",
         components: {
 			Tabbar,
             Navbar
-        }
+        },
+		data() {
+			return {
+				activeKey: '',
+				categories: {}
+			}
+		},
+		methods: {
+			onGoToSearch: function () {
+				this.$router.push({path: '/search'})
+			},
+			async initCategoryData() {
+				const categories = new Categories()
+				this.categories = categories
+				await categories.getAll()
+				const roots = categories.getRoots()
+			}
+		},
+		mounted() {
+			this.initCategoryData()
+		}
 	}
 </script>
 
