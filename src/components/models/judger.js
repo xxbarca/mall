@@ -21,7 +21,6 @@ class Judger {
 			// console.log(skuCode.totalSegments)
 			this.pathDict = this.pathDict.concat(skuCode.totalSegments)
 		})
-		console.log(this.pathDict)
 	}
 }
 

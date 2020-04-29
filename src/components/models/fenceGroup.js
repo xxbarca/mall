@@ -1,6 +1,15 @@
 import {Matrix} from "./matrix"
 import {Fence} from "./fence"
 
+/**
+ * {
+ *     fences: [Fence, Fence, Fence],
+ *     skuList: [],
+ *     spu: {}
+ * }
+ *
+ * */
+
 class FenceGroup {
 	spu
 	skuList = []
