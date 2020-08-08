@@ -34,5 +34,9 @@ export default new Router({
 		path: '/search',
 		name: 'Search',
 		component: Search
+	}, {
+		path: '/spuList',
+		name: 'SpuList',
+		component: () => import('../components/spu-list')
 	}]
 })

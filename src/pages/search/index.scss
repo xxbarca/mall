@@ -1,0 +1,47 @@
+#search {
+    height: 100%;
+    .history-container {
+        display: flex;
+        flex-direction: column;
+    }
+    .history-title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 19px;
+    }
+
+    .slide {
+        width: 4px;
+        height: 23px;
+        background-color: #157658;
+        margin-right: 11px;
+    }
+
+    .title {
+        color: #333333;
+        font-size: 14px;
+        flex: 1;
+    }
+
+    .icon {
+        margin-right: 15px;
+    }
+    .history-tags {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-top: 10px;
+        padding-left: 15px;
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        background-color: #f3f3f3;
+        color: #666666;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+}

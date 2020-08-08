@@ -4,7 +4,7 @@
 			<img :src="bannerImg" v-if="bannerImg" class="banner" alt="">
 			<span class="title">- 全部分类 -</span>
 			<div class="inner-container">
-				<div v-for="item in categories" class="grid-item">
+				<div v-for="item in categories" class="grid-item" @click="onTapItem(item)">
 					<img :src="item.img" class="image"/>
 					<span>{{item.name}}</span>
 				</div>
@@ -18,9 +18,10 @@
 	export default {
 		name: "subCategory",
 		props: ["bannerImg", "categories"],
-		watch: {
-			categories: function (categories) {
-				console.log(categories)
+		methods: {
+			onTapItem(item) {
+				const id = item.id
+				this.$emit('func', id)
 			}
 		}
 	}

@@ -16,7 +16,7 @@
 					</div>
 				</van-sidebar>
 				<div class="right">
-					<SubCategory :categories="currentSubs" :banner-img="currentBannerImg" />
+					<SubCategory @func="onJumpToSpuList" :categories="currentSubs" :banner-img="currentBannerImg" />
 				</div>
 			</div>
 		</div>
@@ -29,6 +29,7 @@
 	import Navbar from '../../components/navbar'
 	import {Categories} from "../../models/categories"
 	import SubCategory from '../../components/sub-category'
+	import {SpuListType} from "../../utils/enum"
 
 	export default {
 		name: "index",
@@ -48,6 +49,9 @@
 			}
 		},
 		methods: {
+			onJumpToSpuList(id) {
+				this.$router.push({path: 'spuList', query: {cid: id, type: SpuListType.SUB_CATEGORY}})
+			},
 			onGoToSearch: function () {
 				this.$router.push({path: '/search'})
 			},
