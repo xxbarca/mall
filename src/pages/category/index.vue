@@ -47,7 +47,11 @@
 		data() {
 			return {
 				activeKey: '',
-				categories: {}
+				categories: {},
+				defaultRootId: 2,
+				roots: [],
+				currentSubs: [],
+				currentBannerImg: ''
 			}
 		},
 		methods: {
@@ -59,6 +63,17 @@
 				this.categories = categories
 				await categories.getAll()
 				const roots = categories.getRoots()
+				this.roots = roots
+				const defaultRoot = this.getDefaultRoot(roots)
+				this.currentSubs = categories.getSubs(defaultRoot.id)
+				this.currentBannerImg = defaultRoot.img
+			},
+			getDefaultRoot(roots) {
+				let defaultRoot = roots.find(r => r.id = this.defaultRootId)
+				if (!defaultRoot) {
+					defaultRoot = roots[0]
+				}
+				return defaultRoot
 			}
 		},
 		mounted() {

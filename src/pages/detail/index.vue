@@ -35,7 +35,7 @@
 		<div class="tabbar">
 			<van-goods-action>
 				<van-goods-action-icon color="#157658" icon="chat-o" text="首页" @click="onGoToHome" />
-				<van-goods-action-icon color="#157658" icon="cart-o" text="购物车" @click="onGoToCart" />
+				<van-goods-action-icon color="#157658" icon="cart-o" text="购物车" badge="5" @click="onGoToCart" />
 				<van-goods-action-button color="#157658" type="warning" text="加入购物车" @click="onAddToCart" />
 				<van-goods-action-button color="#333333" type="danger" text="立即购买" @click="onBuy" />
 			</van-goods-action>
@@ -88,7 +88,6 @@
 			},
 
 			specChange(detail) {
-				console.log(detail)
 				this.specs = detail
 			},
 

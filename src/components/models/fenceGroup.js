@@ -23,6 +23,8 @@ class FenceGroup {
 		return this.skuList.find(s => s.id === default_sku_id)
 	}
 	
+	
+	
 	/**
 	 *
 	 * */
