@@ -10,22 +10,13 @@
 				/>
 			</div>
 			<div class="main">
-				<van-sidebar class="scroll" v-model="activeKey">
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称" />
-					<van-sidebar-item title="标签名称1" />
+				<van-sidebar class="scroll" v-model="activeKey" @change="onChange">
+					<div v-for="item in roots">
+						<van-sidebar-item :title="item.name" :key="item.id" />
+					</div>
 				</van-sidebar>
 				<div class="right">
-					33
+					<SubCategory :categories="currentSubs" :banner-img="currentBannerImg" />
 				</div>
 			</div>
 		</div>
@@ -37,16 +28,18 @@
 	import Tabbar from '../../components/tabbar'
 	import Navbar from '../../components/navbar'
 	import {Categories} from "../../models/categories"
+	import SubCategory from '../../components/sub-category'
 
 	export default {
 		name: "index",
         components: {
 			Tabbar,
-            Navbar
+            Navbar,
+			SubCategory
         },
 		data() {
 			return {
-				activeKey: '',
+				activeKey: 3,
 				categories: {},
 				defaultRootId: 2,
 				roots: [],
@@ -74,6 +67,13 @@
 					defaultRoot = roots[0]
 				}
 				return defaultRoot
+			},
+
+			onChange(index) {
+				this.defaultRoot = this.roots[index]
+				this.currentSubs = this.categories.getSubs(this.defaultRoot.id)
+				this.currentBannerImg = this.defaultRoot.img
+
 			}
 		},
 		mounted() {
