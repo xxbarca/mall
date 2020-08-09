@@ -9,7 +9,7 @@
 				@cancel="onCancel"
 		/>
 		<div class="container">
-			<div>
+			<div v-if="!search">
 				<div class="history-container" v-if="historyTags.length !== 0">
 					<div class="history-title">
 						<label class="slide"></label>
@@ -18,10 +18,24 @@
 					</div>
 					<div class="history-tags">
 						<label class="tag" v-for="(item, index) in historyTags" :key="index">
-							<van-tag color="#F3F3F3" text-color="#7F7F7F">{{item}}</van-tag>
+							<van-tag @click="tagSearch(item)" color="#F3F3F3" text-color="#7F7F7F">{{item}}</van-tag>
 						</label>
 					</div>
 				</div>
+				<div class="history-container">
+					<div class="history-title">
+						<label class="slide"></label>
+						<label class="title">热门搜索</label>
+					</div>
+					<div class="history-tags">
+						<label class="tag" v-for="(item, index) in hotTags" :key="index">
+							<van-tag @click="tagSearch(item.title)" color="#F3F3F3" text-color="#7F7F7F">{{item.title}}</van-tag>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div v-else class="searchitems">
+				<SpuPreviewR v-for="(item, index) in items" :data="item"></SpuPreviewR>
 			</div>
 		</div>
 	</div>
@@ -30,23 +44,32 @@
 <script>
 	import NavBar from '../../components/nav-bar'
 	import {HistoryKeyword} from "../../models/history-keyword"
+	import {Tag} from '../../models/tag'
+	import {Search} from "../../models/search"
+	import SpuPreviewR from '../../components/spu-preview-r'
 	const history = new HistoryKeyword()
 	export default {
 		name: "index",
 		components: {
-			NavBar
+			NavBar,
+			SpuPreviewR
 		},
 		data() {
 			return {
 				keyword: '',
-				historyTags: []
+				historyTags: [],
+				hotTags: [],
+				search: false,
+				items: []
 			}
 		},
-		mounted() {
+		async mounted() {
 			this.historyTags = history.get()
+			this.hotTags = await Tag.getSearchTags()
 		},
 		methods: {
 			handleOnBack() {
+				this.onCancel()
 				this.$router.go(-1)
 			},
 
@@ -55,10 +78,31 @@
 				this.historyTags = history.get()
 			},
 
-			onSearch() {
-				history.save(this.keyword)
+			tagSearch(title) {
+				this.keyword = title
+				this.onSearch()
 			},
-			onCancel() {}
+
+			async onSearch() {
+				if (this.keyword === '') {
+					return
+				}
+				this.search = true
+				history.save(this.keyword)
+				this.historyTags = history.get()
+				const paging = Search.search(this.keyword)
+				const data = await paging.getMoreData()
+				this.bindItems(data)
+			},
+			bindItems(data) {
+				if (data.accumulator.length !== 0) {
+					this.items = data.accumulator
+				}
+			},
+			onCancel() {
+				this.search = false
+				this.items = []
+			}
 		}
 	}
 </script>
