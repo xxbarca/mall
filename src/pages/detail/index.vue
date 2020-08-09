@@ -29,7 +29,7 @@
 		</div>
 
 		<van-popup :lazy-render='false' position="bottom" v-model="showRealm">
-			<Realm @specChange="specChange" :orderWay="orderWay" v-bind:spu="spu" />
+			<Realm @specChange="specChange" @shopping="shopping"  :orderWay="orderWay" v-bind:spu="spu" />
 		</van-popup>
 
 		<div class="tabbar">
@@ -85,6 +85,10 @@
 				const explain = await SaleExplain.getFixed()
 				this.spu = spu
 				this.saleExplain = explain
+			},
+
+			shopping(data) {
+				console.log(data)
 			},
 
 			specChange(detail) {

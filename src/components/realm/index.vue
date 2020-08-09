@@ -31,7 +31,7 @@
 				<Counter @onSelectCount="onSelectCount" />
 			</div>
 		</div>
-		<div v-if="!outStock" class="bottom-btn">
+		<div v-if="!outStock" @click="onBuyOrCart()" class="bottom-btn">
 			<span v-if="orderWay === 'cart'">加入购物车</span>
 			<span v-else>立即购买</span>
 
@@ -86,15 +86,58 @@
 			}
 		},
 		methods: {
+			isNoSpec() {
+				return Spu.isNoSpec(this.spu)
+			},
 			/**
 			 * 获取当前的购买数量
 			 * */
 			onSelectCount(count) {
 				this.currentSkuCount = count
-				if (this.judger.isSkuIntact()) {
+				if (this.isNoSpec()) {
+					this.setStockStatus(this.getNoSpecSku().stock, count)
+				} else if (this.judger.isSkuIntact()) {
 					const sku = this.judger.getDeterminateSku()
 					this.setStockStatus(sku.stock, count)
 				}
+			},
+			/**
+			 * 加入购物车或者立即购买
+			 * */
+			onBuyOrCart() {
+				if (Spu.isNoSpec(this.spu)) {
+					this.shoppingNoSpec()
+				} else {
+					this.shoppingVarious()
+				}
+			},
+
+			shoppingVarious() {
+				const intact = this.judger.isSkuIntact()
+				if (!intact) {
+					// 提示: 没有选择完整的sku
+					console.log('请选择完整sku')
+				}
+				this._triggerShoppingEvent(this.judger.getDeterminateSku())
+			},
+
+
+
+			shoppingNoSpec() {
+				this._triggerShoppingEvent(this.getNoSpecSku())
+			},
+
+			getNoSpecSku() {
+				return this.spu.sku_list[0]
+			},
+
+			_triggerShoppingEvent(sku) {
+				this.$emit('shopping', {
+					orderWay: this.orderWay,
+					spuId: this.spu.id,
+					sku: sku,
+					skuCount: this.currentSkuCount,
+				})
 			},
 			/**
 			 * 绑定cell表格数据
