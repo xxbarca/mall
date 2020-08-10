@@ -13,6 +13,15 @@ class Cart {
 		return this
 	}
 	
+	getAllCartItemFromLocal() {
+		return this._getCartData()
+	}
+	
+	isEmpty() {
+		const cartData = this._getCartData()
+		return cartData.items.length === 0
+	}
+	
 	addItem(newItem) {
 		if (this.beyondMaxCartItemCount()) {
 			throw new Error('超过购物车最大数量')
