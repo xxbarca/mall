@@ -29,7 +29,7 @@
 		</div>
 
 		<van-popup :lazy-render='false' position="bottom" v-model="showRealm">
-			<Realm @specChange="specChange" @shopping="shopping"  :orderWay="orderWay" v-bind:spu="spu" />
+			<Realm @specChange="specChange" @shopping="onShopping"  :orderWay="orderWay" v-bind:spu="spu" />
 		</van-popup>
 
 		<div class="tabbar">
@@ -87,8 +87,12 @@
 				this.saleExplain = explain
 			},
 
-			shopping(data) {
-				console.log(data)
+			onShopping(data) {
+				const {orderWay, skuCount, sku, spuId} = data
+				if (orderWay === ShoppingWay.CART) { // 加入购物车
+
+				}
+
 			},
 
 			specChange(detail) {
