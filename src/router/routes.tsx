@@ -1,5 +1,6 @@
-import Layout from '../pages/Layout'
-import { BannerList } from '../pages/Banner/List'
+import Layout from '@/pages/Layout/index.tsx'
+import { BannerList } from '@/pages/Banner/List'
+import {CategoryList} from "@/pages/Category/List";
 
 
 export const dynamicRoutes = [{
@@ -10,9 +11,17 @@ export const dynamicRoutes = [{
     title: 'Banner管理',
     path: 'banner',
     children: [{
-      path: 'bannerList',
+      path: 'list',
       title: 'Banner列表',
       element: <BannerList />,
+    }]
+  }, {
+    title: '分类管理',
+    path: 'category',
+    children: [{
+      path: 'list',
+      title: '分类列表',
+      element: <CategoryList />,
     }]
   }]
 }]
